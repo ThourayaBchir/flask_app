@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block app_content %}
+<script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+<div class="container">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h1 class="panel-title"> Welcome {{user.username}} </h1>
+
+        </div>
+        <div class="panel-body">
+            <h4> Your IP is {{ip_data.ip}} </h4>
+            <div> <br/>
+                Country: {{ip_data.country_name}}<br/>
+                Region: {{ip_data.region_name}}<br/>
+                Zip: {{ip_data.zip}}<br/>
+                City: {{ip_data.city}}<br/>
+                Latitude: {{ip_data.latitude}}<br/>
+                Longitude: {{ip_data.longitude}}<br/>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+
+<div class="container">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <div><h1 class="panel-title">Explore the behaviour of prime numbers under a limit</h1></div>
+        </div>
+        <div class="panel-body">
+            <form action="/profile/{{user.username}}" method="POST" enctype="multipart/form-data">
+                <label></label>
+                <div>
+                    <label for="limit">Enter a limit number:</label>
+                    <input type="number" name="limit" min="2" max="200000" id="limit">
+                </div>
+                <button type="button" class="btn btn-default" type="submit">Submit</button>
+            </form>
+            <div id='plotDiv' width=" 0" height="350"><!-- Plotly chart --></div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h1 class="panel-title">Upload files</h1>
+        </div>
+        <hr>
+        <div class="panel-body">
+            <div class="border border-success" class="rounded" >
+              <form action="/profile/upload" method="POST" enctype="multipart/form-data">
+                <div>
+                  <label><h5>Select File</h5></label>
+                  <div>
+                    <input type="file" name="user_file" id="user_file"  class="upload">
+                    <label for="user_file"  class="upload">Drag a file ...</label>
+                  </div>
+                </div>
+                <button type="submit" type="button" class="btn btn-default">Upload</button>
+              </form>
+            </div>
+            <br>
+            <br>
+        <h5>Your uploaded files:</h5>
+        <p>{{files_list}}</p>
+
+        </div>
+
+    </div>
+</div>
+<script>
+//curve
+    var primes_distance_list = {{primes_distance_list}};
+    var primes_list = {{primes_list}};
+
+    var primes = {
+      x: primes_list,
+      y: primes_distance_list,
+      type: 'lines+markers',
+      marker: {
+        color: 'rgb(0, 0, 128)',
+        size: 4
+      },
+      line: {
+        color: 'rgb(30, 0, 128)',
+        width: 1
+  }
+    };
+    console.log(primes)
+    var data = [primes];
+
+    var layout = {
+        title:'Prime numbers versus distance between primes'
+    };
+    Plotly.newPlot('plotDiv', data, layout);
+
+</script>
+
+<style>
+    .upload {background-color:hsla(180, 100%, 90%, 0.5); width: 60%; padding-bottom: 10px; padding-top: 10px;}
+</style>
+{% endblock %}
+
+

@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block app_content %}
+
+<div class="panel panel-default col-md-6 col-md-offset-3" id="login">
+    <div class="panel-heading">
+        <h1 class="panel-title">Sign In</h1>
+    </div>
+  <div class="panel-body">
+        <form action="" method="post" novalidate>
+            {{ form.hidden_tag() }}
+            <p>
+                {{ form.username.label }}<br>
+                {{ form.username(size=32) }}
+                {% for error in form.username.errors %}
+                <span style="color: grey;"><br>{{ error }}</span>
+                {% endfor %}
+            </p>
+            <p>
+                {{ form.password.label }}<br>
+                {{ form.password(size=32) }}
+                {% for error in form.password.errors %}
+                <span style="color: grey;"><br>{{ error }}</span>
+                {% endfor %}
+            </p>
+            <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
+            <p>{{ form.submit() }}</p>
+            <p><a href="{{ url_for('register') }}">Register the first time</a></p>
+        </form>
+  </div>
+</div>
+<style>
+    #login {background-color:hsla(180, 100%, 90%, 0.5); width: 40%;}
+</style>
+{% endblock %}

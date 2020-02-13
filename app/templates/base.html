@@ -1,0 +1,30 @@
+{% extends 'bootstrap/base.html' %}
+
+{% block title %}
+      {% if title %}
+      <title>{{ title }} - Data App</title>
+      {% else %}
+      <title>Welcome To Your App</title>
+      {% endif %}
+{% endblock %}
+
+{% block navbar %}
+    <nav class="navbar navbar-default" >
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <div>
+                    <a href={{url_for("index")}} class="navbar-brand">Home</a>
+                    <a href={{url_for("login")}} class="navbar-brand">Login</a>
+                    <a href={{url_for("logout")}} class="navbar-brand">Logout</a>
+                    <a href={{url_for("register")}} class="navbar-brand">Register</a>
+                    <a href="{{ url_for('user', username=current_user.username) }}" class="navbar-brand">Profile</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+{% endblock %}
+
+
+{% block content %}
+        {% block app_content %}{% endblock %}
+{% endblock %}
